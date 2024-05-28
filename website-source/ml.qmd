@@ -1,0 +1,48 @@
+# ML
+
+## Executive summary
+Based on our analysis, a significant portion of Reddit authors appears to be inactive. Among the active users, certain authors who contribute a substantial volume of posts do not necessarily has high influence, as evidenced by their comparatively low total number of comments and scores. Conversely, there are authors who, despite posting a limited number of Reddit entries, command high levels of influencial, as reflected in their substantial total comments and scores. Moreover, an author's influence is notably contingent on the overall score accumulated. Even if an author has a high total number of comments, this impact may still be limited. This could be attributed to the controversial nature of their posts, which might polarize opinions and detract from their overall influence. 
+Besides, we also want to investigating in popularity on different genre/publisher/console of games, which reflects on reddit discussion posts count and game sales data.In an ambitious endeavor to chart the course of the gaming market, we've leveraged advanced machine learning techniques to unearth key trends and predictors of game sales. Our analysis has successfully identified crucial factors that are indicative of a game's market performance, including critical acclaim and brand affinity. Specifically, we've pinpointed that critic scores, the reputation of publishers like Nintendo and Sony, and the compatibility of game genres with specific consoles emerge as pivotal in influencing game sales. Notably, interaction effects between consoles and genres play a vital role, suggesting that matching the right type of game with the appropriate console can significantly boost sales. As a result, our predictive models offer valuable insights for game developers and publishers to strategically position their products in a competitive landscape. This, in turn, facilitates informed decision-making aimed at capturing market share and driving revenue growth, as our models illuminate the path to popularity in the ever-evolving realm of video games.
+
+
+## Analysis Report
+
+### Whether users are active and influetial.
+The first part we apply machine learning on our topice is finding high influcene and low influcence users by clustering. The first step us using Spark to extract information from the Reddit dataset. Subsequently, group the data by author, count the number of reddits post by each author, and then aggregate the total number of comments and scores for each individual author. rows where the author's name has been deleted, and then filter authors based on the condition that requires the total number of posts, total number of comments, and total score received by the author to be greater than 1. Apply kmeans clustering with 3 clusters. Then groupby the cluster, aggregate the minimum number of posts, minimum number of comments and minimum scores for each cluster. We can see that most authors are not active. The minimum requirement for the low influential author is that the total number of comments he got should be more than 2, and total score should be more than 202. The minimum requirement for the high influential author is that the total number of comments he got should be more than 454, and total score should be more than 73919.
+![](img/Active_User_table.png) 
+From the table, it's evident that an author with a low total number of Reddit posts can still be deemed influential if they garner a substantial number of comments and a high total score. On the other hand, the graph reveals that authors with a high total number of comments may not necessarily have a significant impact. This phenomenon could be linked to the controversial nature of their posts, potentially polarizing opinions and diminishing their overall influence. Ultimately, the decisive factor in determining whether an author should be classified as highly influential is the total score they accumulate.
+
+
+![](img/Active_user.png)
+
+## Keywords Classification
+ In this part, we want using classification method to find out which main topic is each reddit posts discussing .Thus, we manually assign labels to the reddits posts of top 10 popular games, encompassing the topics that gamers might discuss such as "bug report", "gameplay discussion", and "lore discussion", which is the common knowledge of most popular topic for each game. We then utilized spark decision tree classifier and random forest classifier to predict these labels on the testing sets.We splitted the reddit data into training, testing, and validation sets and fit the training sets to spark random forest and decision tree classifier for comparison. We chose "is_video", "is_adult", and "spoiler" as features. The random forest classifier has pipeline with different hyperparamters. However, the accuracy score for different hyperparameters are quite similar, which is around 0.35.
+ ![](img/cm.png)
+
+From the confusion matrix, we can see that there are many labels are predicted as "bug report" and "story related discussion"; while for "gameplay discussion" and "lore discussion", none of them are predicted. The reason for that might be the scarity of training features. There are many features in reddit data that are not suitable for classification model training, which would cast influence on the result.
+
+The below pie charts also shows the proportion of these labels among these games. We can see that the "Game items trading" is the largest proportion for all of these games, which makes sense for some online games like Rocket League and Valorant, which has offical platforms for players to trade the game items. Beside that, "bug report" is also a frequently appeared label. Games like FIFA and pokemongo require network connections, which cause cause some bugs and problems that people often discuss. Genshin Impact has relatively equal number of posts of game item tarding, bug reports, and lore discussion. Players of that game might discuss about the story setting for each character, which leads to large number of lore posts.
+```{r, echo=FALSE, warning=FALSE}
+htmltools::includeHTML("img/pie.html")
+```
+
+##  Popularity on different genre/publisher/console of games
+
+The third part is investigating the popularity of each game, and then try to predict the popularity of top 10 games in 6 month future. Two robust models, Random Forest and Gradient Boosting, were selected for their prowess in capturing complex, non-linear relationships inherent in sales data for finding the popularity on different genre/publisher/console of games. Through hyperparameter tuning, we fine-tuned these models, enhancing their predictive accuracy and ensuring they were attuned to the nuances of our dataset.The evaluation phase was marked by a rigorous comparison of the models' performance. Our findings were encapsulated in a series of visualizations that revealed both the models' feature importances and their predictive competencies. The Random Forest model, with its ensemble of decision trees, highlighted the paramount importance of critic scores and the influence of powerhouse publishers and popular gaming consoles on sales. 
+ ![](img/sale_model_performance_rf.png)
+
+Gradient Boosting, sequential in its learning, confirmed these findings while also uncovering the significant impact of user scores and genre-console interactions.
+![](img/sale_model_performance_rf.png)
+Our analysis culminated in a nuanced understanding of the gaming market's dynamics, evidenced by the intricate dance of features that lead to sales success. The visualizations painted a compelling picture: high critic scores, revered publishers, and the synergetic effect of genre-console pairings were the harbingers of high sales figures. This synergy was particularly pronounced, signaling that the compatibility of a game's genre with a console's platform could markedly sway its market performance. In conclusion, our data-driven odyssey has not only illuminated the key determinants of game sales but also provided a predictive compass to guide industry stakeholders. By leveraging our insights, game developers and publishers can now strategically steer their efforts towards creating and marketing games that resonate with both critics and gamers, ultimately leading to commercial triumph.
+![](img/sales_top_important_features.png)
+
+Besides, when predicting the popularity of each game in the next 6 months, we are using an RNN model to forecast time series data of the top 10 games' Reddit discussion posts per month, ranging from January 2021 to February 2023. However, due to the limited size of the training data (26 samples for each game and only 1 variable for discussion post count), the performance of the RNN model is not ideal in approximating future trends, especially for games with frequent new version releases or popular updates. The model performs well on games that don't have many updates, resulting in a stable monthly discussion post count, such as Tetris.
+
+For example, when examining GTA below, we can observe that with each update, there is a peak in discussion posts on Reddit, and our model may struggle to accurately approximate future trends. However, our model works effectively for Tetris because that game doesn't experience frequent updates or new released versions.
+![](img/GTA.png)
+
+![](img/Tetris.png)
+
+## Acknowledgments {.appendix}
+
+This website is partially used Chatgpt to check grammar, spelling, and make sentence more fluent.

@@ -1,0 +1,63 @@
+# GameScope: Analyzing Sales and Reddit Posts in the Video Game Industry
+
+![](img/games.jpeg)Undoubtedly, the gaming sales market has experienced unprecedented popularity, with the figures for 2023 reaching a staggering \$187.7 billion. The allure of this expansive market has led to the annual release of thousands of new games, as nearly everyone seeks to carve a niche in this thriving industry. However, the sheer popularity of the gaming market presents challenges for smaller publishers, making it increasingly difficult for their games to garner attention.Moreover, the definition of a "good game" becomes elusive. What criteria distinguish a game worthy of acclaim? How does one categorize a game as AAA, a pinnacle of the gaming industry? In the midst of these inquiries, we navigate the complexities of the gaming landscape, exploring both the opportunities and obstacles that define this dynamic and ever-evolving market.
+
+![](images/paste-B61F9CB7.png)
+
+In this report, our primary focus lies in conducting a thorough game analysis to discern the factors contributing to a game's popularity. We aim to unravel the intricate reasons behind a game's widespread acclaim, examining the dynamics that propel it to prominence within online discussions. Additionally, we delve into the nuanced elements that elevate a game to the coveted status of the bestseller of the year.
+
+Our inquiry extends to the discerning tastes of players, exploring the aspects that captivate their attention and drive engagement. By identifying these key aspects, we aim to provide valuable insights for game developers and publishers, focusing on the critical factors that players commonly scrutinize. This strategic approach aims to guide future game development endeavors, offering a roadmap for creating titles that resonate with the preferences and expectations of the gaming community.
+
+In this study, our focal point is the North American gaming market and its players, recognized as the largest gaming market globally. Consequently, our investigation will center around Reddit, the largest online game discussion platform. Reddit stands out as a significant source of information, offering a wealth of meaningful and enriched insights. It serves as a comprehensive representation of the diverse perspectives and opinions held by players, making it valuable for understanding the collective views towards games within the North American gaming community. ![](img/download.png){width="681" height="200"}
+
+In this analysis, we will leverage the Spark platform to explore various topics. Renowned for its ability to efficiently handle large datasets, Spark empowers us to process millions of data points swiftly. Subsequently, we will employ machine learning and natural language processing techniques to delve deeper into our specific areas of interest outlined in the appendix questions below.\
+
+# Appendix
+
+1.  **Business Goal**: Among the historical video games sales, determine the best-selling games and its genre/publisher/platforms etc
+
+    **Technical proposal**: Group sales data by game genre, publisher, platforms; rank and visualize the total sales using bar charts or pie charts.
+
+2.  **Business Goal**: Among the video games discussed on Reddit, determine the most popular games and their popularity over months.
+
+    **Technical proposal**: Merge the subreddits with different game categories into one dataframe. Conduct counts of which posts mentioning these games grouping by the games names. Present the results in forms of table and bar chart of top 10 best sales games on Reddit. Plot time series graphs over past 5 years
+
+3.  **Business Goal**: Determine if there's a correlation between video game sales and the volume of Reddit discussions between sales and sentiment scores on Reddit.
+
+    **Technical proposal**: Compare the number of posts and comments for each video game with its sales figures. Plot a scatter plot and correlation heatmap to visualize any correlation between discussion volume and sales. Correlate average sentiment scores from Reddit discussions with sales figures for each game.
+
+4.  **Business Goal**: Predict the potential popularity of different genre of games, thus to find out which type of games will dominate the game market in recent futures
+
+    **Technical proposal**: Use time series arima model to fit the past 5 years popularity for each game, and make predictions by regression for future market share for each type of games.
+
+5.  **Business Goal**: Predict the potential popularity of top 10 sales game, and figure out the trend of next half year for those games
+
+    **Technical proposal**: Use time series RNN/LSTM model to fit the past 3 years popularity for each games on reddit, and make predictions separately for next 6 month.
+
+6.  **Business Goal**: Classify user posts into categories like "Bug Reports", "Gameplay Discussion", "Lore Discussion", etc., for more efficient community management.
+
+    **Technical proposal**: Create labeled data by manually categorizing a subset of posts. Use this data to train a supervised classification model. Test and validate the model's classification accuracy on unseen data, refining the model as necessary.
+
+7.  **Business Goal**: ldentify potential influencers or major contributors in the subreddit communities
+
+    **Technical proposal**: Extract features from user data, such as post frequency, average upvotes, etc. Train a clustering algorithm (like K-Means) to segment users. Identify clusters with high engagement metrics as potential influencers.
+
+8.  **Business Goal**: Discover which video games have the most positive community engagement and interactions.
+
+    **Technical proposal**: Evaluate sentiment scores of comments and posts within each game's subreddit. Calculate average sentiment scores using spark nlp sentiment module, considering both post sentiment and comment sentiment. Rank games based on their average sentiment scores to establish those with the most positive community interactions.
+
+9.  **Business Goal**: Find the daily trend of the ratio of positive sentiment of FIFA, Additionally, search thekeywords that users rate the game with positive/negative feedback.
+
+    **Technical proposal**: Use NLP to identify posts that related to FIFA. Then Conduct counts of positive andnegative sentiment in daily and monthly based, Conduct sentiment analysis of the posts to assign positiveor negative values to FlFA. Present findings for sentiment analysis for the top 10 words that related to FIFA
+
+10. **Business Goal**: Explore the impact of eSports events on general player sentiment and engagement within the community.
+
+    **Technical proposal**: Identify time frames of major eSports events related to the games. Analyze post and comment frequencies during these periods. Apply sentiment analysis to determine if eSports events lead to increased positivity or negativity within the community.
+
+11. **Business Goal**: Find the key points that players are most satisfied/unsatisfied for Top 10 sales games.
+
+    **Technical proposal**: Identify posts with games, filtering them with nlp methods to derive the positive and negative score on those posts. Using tf-idf model to derive the top 15 key points/aspects that shows strongest positive/negative attitudes.3
+
+## Acknowledgments {.appendix}
+
+This website is partially used Chatgpt to check grammar, spelling, and make sentence more fluent.

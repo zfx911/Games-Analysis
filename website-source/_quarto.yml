@@ -1,0 +1,38 @@
+project:
+  type: website
+
+website:
+  title: GameScope Analysis
+  navbar:
+    left:
+      - href: eda.qmd
+        text: EDA
+      - href: nlp.qmd
+        text: NLP Summary
+      - href: nlp_report.qmd
+        text: NLP Analysis Report
+      - href: ml.qmd
+        text: ML
+      - href: summary.qmd
+        text: Summary
+    Acknowledgments: |
+      This website is partially used Chatgpt to check grammar, spelling, and make sentence more fluent. <br>
+  page-footer:
+    left: |
+      Content {{< fa brands creative-commons >}} {{< var course.copyright_year >}} by [{{< var author.name >}}] <br>
+    right: |
+      Made with {{< fa brands r-project >}} and [Quarto](https://quarto.org/)<br>
+      [View the source at {{< fa brands github >}} GitHub]({{< var course.github >}})
+
+
+format:
+  html:
+    theme: lumen
+    css: styles.css
+    toc: true
+    code-fold: true
+    toc-title: Contents
+    embed-resources: true
+    self-contained: true
+    preview-links: auto
+

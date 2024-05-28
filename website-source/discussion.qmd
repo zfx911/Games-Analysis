@@ -1,0 +1,58 @@
+In the section, we will discuss the feedbacks we received from our peers and the instructional team. Specifically, each feedback would be examined under different categories, and we will explian how we adopt these suggestions or why we chose not to.
+
+# Project Plans
+
+Comments: The second technical report specifies the inclusion of the top K games (where 5 <= K <= 10), the data visualization and table feature only includes the top 10 games.
+Discussion: The description of this technical report indeed unmatches our visualizations that are only about top 10 games, which confused audiences. Therefore, we will revise this technical report and specify that we are only going to use top 10 game as the data.
+
+Comments: The third technical report needs some improvements, especially the explanation of the reasons to choose the types of the plot.
+Discussion: in this report, we have already indicated the reaosn of choosing scatter plot and heatmap, which is showcasing the correlation between discussion volume and sales.
+
+Comments: For the fourth technical proposal, it is kind of confusing about whether this topic will use the time series arima/ann model or regression. If you choose the first model, it could also be used to make predictions.
+Discussions: This technical report includes the type of methodologies that we plan to use, which is arima or ann. We only used arima in our ML milestone, which makes this report confusing. Thus we delete the ann model from this report.
+
+Comments: The idea for this business goal is great, but the manually label part may be hard to achieve, and as
+for the technical proposal part, there is another problem regarding the test part, it is also hard to get
+the classification accuracy if the data is unlabelled for sixth business goal.
+Discussion: To achieve this goal, we came up with five categories, which are "bug report", "gameplay discussion", "story related discussion", "lore discussion" and "game items trading". We then ctreated a word list for each of these category and if the post contains any of the words from the list, it will be labeled into one of the corresponding category, which is not hard to achieve. Although the accuracy is low, we thought the reason for it was not unlabelled data, but the scarcity in training features.
+
+Comments: There is some ambiguity regarding the method of obtaining these sentiment scores in the eighth technical report.
+Discussion: In this report, we did not mention the sentimental analysis model, which causes some ambiguities. Thus, in the revised version, we will specify the model here.
+
+Comments: The ninth business goal appears somewhat ambiguous, lacking sufficient information and motivation.
+Discussion: This business goal is not clear in conveying the meaning. Also we did not perform the NLP analysis for each game. Therefore, 
+
+Comments: It would be advantageous to include an examination of sales data during this chosen period in the final business goal.
+Discussion: Since the focus of this goal is about esports games like DOTA2 and LOL, there is no sales data for these download free games. Also the sales external datasets do not cover these esports games, making it unrealistic to examine the sales data.
+
+
+# EDA Work
+
+Comments: Lack or few usage of pyspark on data transformation and preprocessing.
+Discussion: Our data preprocessing processes for all the visualizations are performed using pyspark. Specifically, we read the reddit submission parquet file, and then performed filtering and selecting relevant columns based on different visualizations. This section is in our eda webpage with a detailed description.
+
+Comments: The barplot titled "Top 10 Best-Selling Games on Specific Platform" lacks clarity due to the absence of interactive elements like dropdowns to select platforms, which contradicts the title.
+Discussion: This plot showcases the top sales for games across different platforms. The title is confusion, and we have changed it in our final eda page.
+
+# NLP Work
+
+Comments: Sentiment by game type/event status should also include some percentages.
+Discussion: For the sentimenta by game type and event status, we ploted a heatmp to show the correlation between these two topics. Therefore, it would not be unnecessary if we incorporate percentage in the heatmap. In addition, Professor Anderson asked "Do you want the reader to compare across columns or down a column?". Since we are visualizing the correlation between sentimental and game type/event statu, we compared it cell-wise instead of column-wise.
+
+Comments: Positive ratio/total subreddit plotly chart is mislabeled.
+Discussion: The y axis label for the monthly based total subreddit post is mislabeled, we change this label to the correct one.
+
+Comments: “early September to September 22” what time period it this?
+Discussion: In the paragraph where we talks about the sentimental analysis of FIFA, we used phrase “early September to September 22”, which is vague. Thus we will specify the year in this sentence to make it clearer.
+
+Comments: Can you unpack why Dota 2 is more positive than LoL?
+Discussion: We visually show that Dota 2 is more sentimentaly positive than LOL, and we will search online in reddits posts, trying to find the reasons for that.
+
+# ML Work
+
+Comments: What sort of comments are you seeing from those high influence users?
+Discussion: We will look through high influence Reddit users' posts and search for frequent words, adding them in the ML section.
+
+Comments: You are almost entirely predicting a single class. What does that mean for your model performance? Is it based on random chance?
+Discussion: In the code notebook for out ML works, we performed a grid search of parameters and tried to find out which one is the best option by comparing the metrics for each of the model. We also have multiclass prediction such as predicting the categories like "bug report", "Lore Discussion", etc.
+
