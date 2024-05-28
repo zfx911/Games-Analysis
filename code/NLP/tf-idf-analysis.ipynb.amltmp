@@ -1,0 +1,159 @@
+{
+  "cells": [
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "import numpy as np"
+      ],
+      "outputs": [],
+      "execution_count": 1,
+      "metadata": {
+        "gather": {
+          "logged": 1700351387765
+        }
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df = pd.read_csv(\"../../data/csv/sentiment_text_top10.csv\")\n"
+      ],
+      "outputs": [],
+      "execution_count": 2,
+      "metadata": {
+        "gather": {
+          "logged": 1700351388715
+        },
+        "jupyter": {
+          "outputs_hidden": false,
+          "source_hidden": false
+        },
+        "nteract": {
+          "transient": {
+            "deleting": false
+          }
+        }
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#!pip install sklearn\n",
+        "from sklearn.feature_extraction.text import TfidfVectorizer\n",
+        "\n",
+        "tfidf_vectorizer = TfidfVectorizer(stop_words='english', max_features=5000)\n",
+        "\n",
+        "# Step 2: Fit and transform the \"title\" column\n",
+        "tfidf_matrix = tfidf_vectorizer.fit_transform(df['title'])\n",
+        "# Step 3: Create a new DataFrame with TF-IDF values and \"subreddit\" and \"sentiment\" labels\n",
+        "tfidf_df = pd.DataFrame(tfidf_matrix.toarray(), columns=tfidf_vectorizer.get_feature_names_out())\n",
+        "tfidf_df['subreddit'] = df['subreddit']\n",
+        "tfidf_df['sentiment'] = df['sentiment']\n",
+        "\n",
+        "tfidf_df.drop(\"deleted\", axis=1, inplace=True)"
+      ],
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "ModuleNotFoundError",
+          "evalue": "No module named 'sklearn'",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mModuleNotFoundError\u001b[0m                       Traceback (most recent call last)",
+            "Cell \u001b[0;32mIn[5], line 2\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[38;5;66;03m#!pip install sklearn\u001b[39;00m\n\u001b[0;32m----> 2\u001b[0m \u001b[38;5;28;01mfrom\u001b[39;00m \u001b[38;5;21;01msklearn\u001b[39;00m\u001b[38;5;21;01m.\u001b[39;00m\u001b[38;5;21;01mfeature_extraction\u001b[39;00m\u001b[38;5;21;01m.\u001b[39;00m\u001b[38;5;21;01mtext\u001b[39;00m \u001b[38;5;28;01mimport\u001b[39;00m TfidfVectorizer\n\u001b[1;32m      4\u001b[0m tfidf_vectorizer \u001b[38;5;241m=\u001b[39m TfidfVectorizer(stop_words\u001b[38;5;241m=\u001b[39m\u001b[38;5;124m'\u001b[39m\u001b[38;5;124menglish\u001b[39m\u001b[38;5;124m'\u001b[39m, max_features\u001b[38;5;241m=\u001b[39m\u001b[38;5;241m5000\u001b[39m)\n\u001b[1;32m      6\u001b[0m \u001b[38;5;66;03m# Step 2: Fit and transform the \"title\" column\u001b[39;00m\n",
+            "\u001b[0;31mModuleNotFoundError\u001b[0m: No module named 'sklearn'"
+          ]
+        }
+      ],
+      "execution_count": 5,
+      "metadata": {
+        "gather": {
+          "logged": 1700351434507
+        },
+        "jupyter": {
+          "outputs_hidden": false,
+          "source_hidden": false
+        },
+        "nteract": {
+          "transient": {
+            "deleting": false
+          }
+        }
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "top_words_per_group = (\n",
+        "    tfidf_df.groupby(['subreddit', 'sentiment'])\n",
+        "            .mean()\n",
+        "            #.T  # Transpose to have words as rows and groups as columns\n",
+        "            .apply(lambda x: x.nlargest(10).index.tolist(), axis=1)\n",
+        ")\n",
+        "\n",
+        "# Display the top 10 words for each subreddit and sentiment group\n",
+        "print(top_words_per_group)"
+      ],
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": "subreddit       sentiment\nCallOfDuty      neg          [deleted, user, cod, help, mw2, game, duty, mw...\n                neutral      [cod, mw2, duty, game, warfare, war, modern, g...\n                pos          [cod, mw2, duty, war, warzone, warfare, mw, co...\nFIFA            neg          [deleted, user, fifa, game, team, ea, help, fu...\n                neutral      [fifa, team, fut, game, ea, players, 22, play,...\n                pos          [fifa, best, icon, team, pack, player, fut, sb...\nFinalFantasy    neg          [user, deleted, ff, final, fantasy, help, game...\n                neutral      [ff, final, ffx, fantasy, play, boss, better, ...\n                pos          [fantasy, final, ff, game, ff7, remake, art, t...\nGTA             neg          [deleted, user, gta, help, car, just, game, ne...\n                neutral      [gta, game, rockstar, online, wait, does, miss...\n                pos          [gta, online, san, definitive, andreas, editio...\nSuperMario      neg          [mario, user, deleted, like, just, context, ge...\n                pos          [mario, super, bros, movie, vs, new, party, wi...\nTetris          neg          [tetris, user, deleted, mobile, tetr, io, help...\n                neutral      [tetris, effect, gods, improvement, setup, rec...\n                pos          [tetris, score, pb, new, tetr, got, good, io, ...\nassassinscreed  neg          [deleted, user, ac, creed, assassin, valhalla,...\n                neutral      [creed, ac, assassin, game, assassins, valhall...\n                pos          [creed, ac, valhalla, assassin, assassins, ody...\nlegostarwars    neg          [user, deleted, help, know, just, lego, think,...\n                neutral      [megathread, deal, buy, good, does, know, lego...\n                pos          [lego, set, star, moc, wars, sets, collection,...\npokemon         neg          [user, deleted, help, pokemon, pokémon, need, ...\n                neutral      [pokémon, pokemon, help, gen, game, team, shin...\n                pos          [pokemon, pokémon, oc, shiny, game, favorite, ...\nthesims         neg          [sims, deleted, user, sim, help, game, just, l...\n                neutral      [sims, sim, does, cc, work, know, mac, mods, c...\n                pos          [sims, cc, sim, house, new, build, game, mod, ...\ndtype: object\n"
+        }
+      ],
+      "execution_count": 8,
+      "metadata": {
+        "gather": {
+          "logged": 1700126869807
+        },
+        "jupyter": {
+          "outputs_hidden": false,
+          "source_hidden": false
+        },
+        "nteract": {
+          "transient": {
+            "deleting": false
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "kernel_info": {
+      "name": "python3"
+    },
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)"
+    },
+    "language_info": {
+      "name": "python",
+      "version": "3.8.5",
+      "mimetype": "text/x-python",
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "pygments_lexer": "ipython3",
+      "nbconvert_exporter": "python",
+      "file_extension": ".py"
+    },
+    "microsoft": {
+      "ms_spell_check": {
+        "ms_spell_check_language": "en"
+      },
+      "host": {
+        "AzureML": {
+          "notebookHasBeenCompleted": true
+        }
+      }
+    },
+    "nteract": {
+      "version": "nteract-front-end@1.0.0"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 2
+}
