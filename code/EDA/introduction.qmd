@@ -1,0 +1,61 @@
+# GameScope: Analyzing Sales and Reddit Posts in the Video Game Industry
+
+*Group Members: Yixiang Cheng; Naihuan Jing; Zifeng Xu; Kefan Yu*
+
+## Introduction
+
+![](./img/video_games.webp)
+
+In the ever-evolving landscape of digital entertainment, video games have become a cultural phenomenon, pushing the boundaries of interactive storytelling, competitive sports, and social engagement. Our project, titled "GameScope: Analyzing Sales and Sentiments in the Video Game Industry", aims to harness the vast repository of video game sales data alongside rich, community-driven discussions from Reddit to uncover trends, predict future market shifts, and understand the pulse of the gaming community. By leveraging a combination of exploratory data analysis, machine learning algorithms, and natural language processing (NLP), we seek to reveal the intricacies of video game popularity, genre dominance, and community sentiment. Through this multifaceted approach, "GameScope" will provide valuable insights into the best-selling games and the most engaging titles, identify potential influencers, and offer strategic recommendations for stakeholders in the gaming industry.
+
+## Topics
+
+### Exploratory
+
+1.  **Business Goal**: Among the historical video games sales, determine the best-selling games and its genre/publisher/platforms etc.. ([external dataset](https://www.kaggle.com/datasets/gregorut/videogamesales))
+
+    **Technical proposal**: Group sales data by game genre, publisher, platforms; rank and visualize the total sales using bar charts or pie charts.
+
+2.  **Business Goal**: Among the video games discussed on Reddit, determine the most popular games and their popularity over months.
+
+    **Technical proposal**: Merge the subreddits with different game categories into one dataframe. Conduct counts of which posts mentioning these games grouping by the games names. Present the results in forms of table and bar chart of top K (5 \<= K \<= 10) most popular games on Reddit. Plot time series graphs over past 5 years
+
+3.  **Business Goal**: Determine if there's a correlation between video game sales and the volume of Reddit discussions + between sales and sentiment scores on Reddit.
+
+    **Technical Proposal**: Compare the number of posts and comments for each video game with its sales figures. Plot a scatter plot to visualize any correlation between discussion volume and sales. Correlate average sentiment scores from Reddit discussions with sales figures for each game. Use scatter plots or heat maps to visualize the relationship.
+
+### Machine learning
+
+4.  **Business Goal**: Predict the potential popularity of different genre of games, thus to find out which type of games will dominate the game market in recent futures
+
+    **Technical proposal**: Use time series arima/ann model to fit the past 5 years popularity for each game, and make predictions by regression for future market share for each type of games.
+
+5.  **Business Goal**: Classify games into different genres in their sale data ([external dataset](https://www.kaggle.com/datasets/gregorut/videogamesales))
+
+    **Technical proposal**: Use the external data with genre labels to train a supervised classification model. Test and validate the model's classification accuracy on test data and evaluate the model by accuracy metric.
+
+6.  **Business Goal**: Classify user posts into categories like "Bug Reports", "Gameplay Discussion", "Lore Discussion", etc., for more efficient community management.
+
+    **Technical proposal**: Create labeled data by manually categorizing a subset of posts. Use this data to train a supervised classification model. Test and validate the model's classification accuracy on unseen data, refining the model as necessary.
+
+7.  **Business Goal**: Identify potential influencers or major contributors in the subreddit communities to form partnerships or community events.
+
+    **Technical proposal**: Extract features from user data, such as post frequency, average upvotes, etc. Train a clustering algorithm (like K-Means) to segment users. Identify clusters with high engagement metrics as potential influencers.
+
+### NLP
+
+8.  **Business Goal**: Discover which video games have the most positive community engagement and interactions.
+
+    **Technical proposal**: Evaluate sentiment scores of comments and posts within each game's subreddit. Calculate average sentiment scores, considering both post sentiment and comment sentiment. Rank games based on their average sentiment scores to establish those with the most positive community interactions.
+
+9.  **Business Goal**: Find the daily trend of the ratio of positive sentiment of FIFA. Additionally, search the keywords that users rate the game with positive/negative feedback. 
+
+    **Technical proposal**: Use NLP to identify posts that related to FIFA. Then Conduct counts of positive and negative sentiment in daily and monthly based. Conduct sentiment analysis of the posts to assign positive or negative values to FIFA. Present findings for sentiment analysis for the top 10 words that related to FIFA.
+
+10. **Business Goal**: Find the key points that players are most satisfied/unsatisfied for each game .
+
+    **Technical proposal**: Identify posts with games, filtering them with nlp methods to derive the positive and negative score on those posts. Giving weights for posts depends on their score, and deriving the top key points/aspects that shows strongest positive/negative attitudes.
+
+11. **Business Goal**: Explore the impact of eSports events on general player sentiment and engagement within the community.
+
+    **Technical proposal**: Identify time frames of major eSports events related to the games. Analyze post and comment frequencies during these periods. Apply sentiment analysis to determine if eSports events lead to increased positivity or negativity within the community.
